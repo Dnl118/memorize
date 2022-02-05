@@ -8,19 +8,24 @@
 import SwiftUI
 
 struct ContentView: View {
-    let emojis = ["✈️", "🏍", "🚔", "🚜", "🏎", "🛵", "🚛", "🚍", "🚝", "🚂", "🛰", "🛩", "🛸", "🛳", "🚢", "⛴", "🚎", "🚌", "🚒", "🛴", "🚲", "🚅"]
     
-    @State var emojiCount = 4
+    @State var emojis = Emojis.vehicles.shuffled()
+    
+    var emojisCount: Int {
+        return emojis.count
+    }
     
     var body: some View {
         VStack {
+            Text("Memorize!").font(.largeTitle)
+            
             ScrollView {
                 LazyVGrid(columns: [
                     GridItem(
                         .adaptive(minimum: 65)
                     )
                 ]) {
-                    ForEach(emojis[0..<emojiCount], id: \.self) {
+                    ForEach(emojis[0..<emojisCount], id: \.self) {
                         CardView(content: $0).aspectRatio(2/3, contentMode: .fit)
                     }
                 }
@@ -30,9 +35,11 @@ struct ContentView: View {
             Spacer()
             
             HStack {
-                removeButton
+                vehicles
                 Spacer()
-                addButton
+                nature
+                Spacer()
+                sports
             }
             .font(.largeTitle)
             .padding(.horizontal)
@@ -40,23 +47,36 @@ struct ContentView: View {
         .padding(.horizontal)
     }
     
-    var removeButton: some View {
+    var vehicles: some View {
         Button {
-            if emojiCount > 1 {
-                emojiCount -= 1
-            }
+            emojis = Emojis.vehicles.shuffled()
         } label: {
-            Image(systemName: "minus.circle")
+            VStack {
+                Image(systemName: "car")
+                Text("Vehicles").font(.footnote)
+            }
         }
     }
     
-    var addButton: some View {
+    var nature: some View {
         Button {
-            if emojiCount < emojis.count {
-                emojiCount += 1
-            }
+            emojis = Emojis.nature.shuffled()
         } label: {
-            Image(systemName: "plus.circle")
+            VStack {
+                Image(systemName: "leaf")
+                Text("Nature").font(.footnote)
+            }
+        }
+    }
+    
+    var sports: some View {
+        Button {
+            emojis = Emojis.sports.shuffled()
+        } label: {
+            VStack {
+                Image(systemName: "sportscourt")
+                Text("Sports").font(.footnote)
+            }
         }
     }
 }
@@ -89,7 +109,7 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
             .preferredColorScheme(.dark)
-.previewInterfaceOrientation(.portrait)
+            .previewInterfaceOrientation(.portrait)
         
         ContentView()
             .preferredColorScheme(.light)
