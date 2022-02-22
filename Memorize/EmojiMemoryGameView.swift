@@ -12,8 +12,6 @@ struct EmojiMemoryGameView: View {
     
     var body: some View {
         VStack {
-            Text("Memorize!").font(.largeTitle)
-            
             AspectVGrid(items: game.cards, aspectRatio: 2/3) { card in
                 if card.isMatched && card.isFacedUp {
                     Rectangle().opacity(0)
@@ -25,54 +23,9 @@ struct EmojiMemoryGameView: View {
                         }
                 }
             }
-            .foregroundColor(.red)
-            
-            Spacer()
-            
-            HStack {
-                vehicles
-                Spacer()
-                nature
-                Spacer()
-                sports
-            }
-            .font(.largeTitle)
-            .padding(.horizontal)
         }
+        .foregroundColor(.red)
         .padding(.horizontal)
-    }
-    
-    var vehicles: some View {
-        Button {
-            //            emojis = Emojis.vehicles.shuffled()
-        } label: {
-            VStack {
-                Image(systemName: "car")
-                Text("Vehicles").font(.footnote)
-            }
-        }
-    }
-    
-    var nature: some View {
-        Button {
-            //            emojis = Emojis.nature.shuffled()
-        } label: {
-            VStack {
-                Image(systemName: "leaf")
-                Text("Nature").font(.footnote)
-            }
-        }
-    }
-    
-    var sports: some View {
-        Button {
-            //            emojis = Emojis.sports.shuffled()
-        } label: {
-            VStack {
-                Image(systemName: "sportscourt")
-                Text("Sports").font(.footnote)
-            }
-        }
     }
 }
 
