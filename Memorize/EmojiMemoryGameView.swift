@@ -14,15 +14,15 @@ struct EmojiMemoryGameView: View {
         VStack {
             Text("Memorize!").font(.largeTitle)
             
-            ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
-                    ForEach(game.cards) { card in
-                        CardView(card: card)
-                            .aspectRatio(2/3, contentMode: .fit)
-                            .onTapGesture {
-                                game.choose(card)
-                            }
-                    }
+            AspectVGrid(items: game.cards, aspectRatio: 2/3) { card in
+                if card.isMatched && card.isFacedUp {
+                    Rectangle().opacity(0)
+                } else {
+                    CardView(card: card)
+                        .padding(4)
+                        .onTapGesture {
+                            game.choose(card)
+                        }
                 }
             }
             .foregroundColor(.red)
